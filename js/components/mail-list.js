@@ -1,22 +1,31 @@
 var React = require('react');
-
-var Mail = require('mail');
+var router = require('react-router');
+var Link = router.Link;
+var Mail = require('./mail');
+var EMAIL = require('../email');
 
 var MailList = function(props) {
-    var mails = Object.keys(props.mails).map(function(mailId, index) {
-        var mail = props.mails[mailId];
+    var whichBox = props.whichBox.mailbox_name;
+    var mails = Object.keys(props.boxName).map(function(mailId, index) {
+        var mail = props.boxName[mailId];
         return (
             <li key={index}>
-                <Mail id={contact.id} name={contact.name}
-                         phoneNumber={contact.phoneNumber} />
+                <strong>
+                    <Link to={'/email/' + whichBox + '/' + mail.id}>
+                        {mail.from}
+                    </Link>
+                </strong>
+                <br />
+                {mail.title}
+                <br />
             </li>
         );
     });
     return (
         <ul>
-            {contacts}
+            {mails}
         </ul>
     );
 };
 
-module.exports = ContactList;
+module.exports = MailList;
